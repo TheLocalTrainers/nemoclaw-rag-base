@@ -4,6 +4,8 @@
 
 Eliminating the front-end data reconciliation lag in clinical trial operations — **100% locally with zero cloud egress**.
 
+> 🎤 **Preparing for the 5-minute pitch? Read [`docs/PITCH_DECK.md`](docs/PITCH_DECK.md) for the complete 8-slide deck, speaker talk tracks, and judge Q&A defense.**
+
 ---
 
 ## What CareClaw Does
