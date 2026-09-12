@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Secrets and machine-local overrides
+# Non-secret config belongs in nemoclaw-rag.toml, which IS committed.
+.env
+configs/nemoclaw.env
+*.local
+
+# Local runtime state
+data/
+.rag/
+.tools/
+*.sqlite
+*.db
+
+# NemoClaw / OpenShell host state (do not commit)
+.nemoclaw/
+.openshell/
+.hermes/
+.openclaw/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp

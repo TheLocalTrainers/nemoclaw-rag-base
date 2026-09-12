@@ -1,0 +1,17 @@
+# Values come from .env (Compose auto-loads it); defaults mirror nemoclaw-rag.toml.
+services:
+  mongo:
+    image: ${MONGODB_IMAGE:-mongo:7}
+    container_name: nemoclaw-rag-mongo
+    ports:
+      - "${MONGODB_PORT:-27017}:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mongo_data:
