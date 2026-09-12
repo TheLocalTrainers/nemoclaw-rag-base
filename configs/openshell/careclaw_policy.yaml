@@ -1,0 +1,44 @@
+# =============================================================================
+# NVIDIA OpenShell Sandbox Policy — CareClaw Clinical Trial Enclave
+# =============================================================================
+# Enforces zero-trust kernel-level isolation on the Dell Pro Max / NVIDIA GB10.
+# Strictly prohibits external cloud network egress to guarantee HIPAA & GDPR compliance.
+# =============================================================================
+
+version: "1.0"
+sandbox:
+  name: "careclaw-clinical-enclave"
+  description: "Isolated execution environment for CareClaw always-on clinical trial sentinel"
+  profile: "clinical-strict"
+
+# Network isolation rules
+network:
+  default: "block" # Zero outbound internet access; patient data CANNOT leave hardware
+  allow:
+    - host: "127.0.0.1"
+      port: 8000     # Local vLLM OpenAI-compatible inference endpoint on GB10
+      protocol: "tcp"
+    - host: "127.0.0.1"
+      port: 27017    # Local MongoDB RAG database
+      protocol: "tcp"
+
+# Filesystem permissions and sandboxed mount points
+filesystem:
+  root: "read_only"
+  mounts:
+    - path: "./data"
+      mode: "ro"
+      description: "Read-only access to clinical protocols and MedDRA dictionaries"
+    - path: "./incoming_records"
+      mode: "ro"
+      description: "Read-only access to de-identified patient drop folder"
+    - path: "./audit_logs"
+      mode: "rw"
+      description: "Append-only storage for 21 CFR Part 11 cryptographically hashed audit trails"
+
+# Process execution limits
+process:
+  max_memory_mb: 8192
+  allow_subprocesses: false
+  allowed_binaries:
+    - "python3"
