@@ -1,0 +1,25 @@
+# NON-AUTHORITATIVE SKETCH — Hermes intent for this base project.
+#
+# NemoClaw writes the real config to /sandbox/.hermes/config.yaml during onboard.
+# Authoritative host config lives in nemoclaw-rag.toml + .env.
+# Nothing in this repo reads this file at runtime.
+
+workspace: /sandbox/workspace
+
+memory:
+  enabled: true
+  # Where the corpus should appear if you mount it into the sandbox.
+  corpus_hint: /sandbox/workspace/corpus
+
+rag:
+  # Retrieval is MongoDB text search; see [mongodb] in nemoclaw-rag.toml.
+  mode: mongodb-text
+  # Read connection details from the environment, never hardcode them here.
+  mongodb_uri_env: MONGODB_URI
+  smoke_token_source: "nemoclaw-rag.toml [project].smoke_token"
+
+model:
+  # Resolved from [model] in nemoclaw-rag.toml / OPENAI_* env vars.
+  base_url_env: OPENAI_BASE_URL
+  model_env: OPENAI_MODEL
+  api_key_env: OPENAI_API_KEY

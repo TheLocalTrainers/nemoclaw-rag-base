@@ -1,0 +1,17 @@
+{
+  "_comment": "NON-AUTHORITATIVE SKETCH for OpenClaw runs. NemoClaw/OpenShell own the live gateway config. Authoritative host config is nemoclaw-rag.toml + .env; nothing in this repo reads this file at runtime.",
+  "name": "nemoclaw-rag-base",
+  "agents": {
+    "defaults": {
+      "model": {
+        "primaryFromEnv": "OPENAI_MODEL",
+        "baseUrlFromEnv": "OPENAI_BASE_URL",
+        "apiKeyFromEnv": "OPENAI_API_KEY"
+      },
+      "memorySearch": {
+        "enabled": true,
+        "sources": ["memory", "sessions"]
+      }
+    }
+  }
+}
