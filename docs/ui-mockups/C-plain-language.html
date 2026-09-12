@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CareClaw · Plain Language — PT-004</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Spline+Sans+Mono:wght@400;500&display=swap">
+<style>
+/* ============================================================
+   DIRECTION C — PLAIN LANGUAGE / SUMMARY-FIRST
+   Plain-English headline · progressive disclosure · high contrast
+   Display: Bricolage Grotesque · Body: Atkinson Hyperlegible (accessibility)
+   Mono: Spline Sans Mono
+   ============================================================ */
+:root{
+  --bg:#f2f4f3;
+  --card:#ffffff;
+  --card-2:#f5f7f6;
+  --line:#d6dcda;
+  --line-strong:#b9c2bf;
+
+  --ink:#10201c;            /* very dark, high contrast */
+  --ink-2:#3c4a46;
+  --ink-mut:#5f6d69;        /* still >4.5:1 on white */
+
+  --accent:#0a6b5c;         /* deep teal, accessible on white */
+  --accent-soft:#dcefeb;
+  --accent-deep:#064f44;
+
+  --crit:#b21f2b;           /* AA on white */
+  --crit-soft:#fbe6e7;
+  --major:#8a5300;          /* AA on white */
+  --major-soft:#f8ecd7;
+  --clear:#0a6b5c;
+  --clear-soft:#dcefeb;
+
+  --body:'Atkinson Hyperlegible',system-ui,-apple-system,Segoe UI,sans-serif;
+  --disp:'Bricolage Grotesque',var(--body);
+  --mono:'Spline Sans Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --r:18px; --r-sm:12px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%}
+::selection{background:var(--accent-soft)}
+a{color:var(--accent-deep)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+.wrap{max-width:780px;margin:0 auto;padding:24px 22px 150px}
+
+/* header */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-glyph{width:36px;height:36px;flex:none;border-radius:11px;color:#fff;
+  background:var(--accent);display:grid;place-items:center}
+.brand-glyph svg{width:20px;height:20px}
+.brand-name{font-family:var(--disp);font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:1}
+.brand-tag{font-size:12px;color:var(--ink-mut);margin-top:2px}
+.who{font-size:13px;text-align:right}
+.who b{font-weight:700}
+.who span{display:block;color:var(--ink-mut);font-size:12px}
+
+/* ===== the plain-English headline ===== */
+.summary{
+  background:var(--card);border:2px solid var(--ink);border-radius:var(--r);
+  padding:28px 28px 26px;box-shadow:8px 8px 0 -1px rgba(16,32,28,.08);
+}
+.summary .who-for{font-size:14px;font-weight:700;color:var(--accent-deep);letter-spacing:.02em;margin:0 0 10px}
+.summary h1{
+  font-family:var(--disp);font-weight:700;font-size:31px;line-height:1.18;letter-spacing:-.015em;
+  margin:0 0 14px;
+}
+.summary h1 .hl{background:linear-gradient(transparent 62%, var(--major-soft) 62%);padding:0 2px}
+.summary p{font-size:17px;color:var(--ink-2);margin:0;max-width:60ch;line-height:1.6}
+.summary p b{color:var(--ink)}
+
+/* at-a-glance checklist */
+.glance{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.glance li{display:flex;align-items:center;gap:13px;font-size:16px;font-weight:700}
+.glance .mark{width:28px;height:28px;flex:none;border-radius:9px;display:grid;place-items:center;
+  color:#fff;font-size:15px;font-weight:700}
+.glance .mark.crit{background:var(--crit)}
+.glance .mark.major{background:var(--major)}
+.glance .mark.ok{background:var(--clear)}
+.glance small{font-weight:400;color:var(--ink-mut);font-size:14px;margin-left:auto;text-align:right}
+
+/* patient strip */
+.patient{
+  margin-top:22px;display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);padding:16px 20px;
+}
+.patient .pid{font-family:var(--disp);font-weight:700;font-size:20px}
+.patient .psub{font-size:14px;color:var(--ink-2)}
+.patient .facts{display:flex;flex-wrap:wrap;gap:6px 20px;margin-left:auto;font-size:13.5px;color:var(--ink-2)}
+.patient .facts b{color:var(--ink);font-weight:700}
+
+/* section label */
+.sec-label{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.02em;
+  color:var(--ink-mut);text-transform:uppercase;margin:40px 0 14px}
+
+/* ===== progressive disclosure items ===== */
+.item{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  margin-bottom:14px;overflow:hidden;
+}
+.item[open]{border-color:var(--line-strong)}
+.item > summary{
+  list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;gap:16px;
+}
+.item > summary::-webkit-details-marker{display:none}
+.tag{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  padding:6px 11px;border-radius:9px;white-space:nowrap;flex:none}
+.tag.crit{color:#fff;background:var(--crit)}
+.tag.major{color:#fff;background:var(--major)}
+.tag.ok{color:#fff;background:var(--clear)}
+.item .plain{flex:1;min-width:0}
+.item .plain .h{font-family:var(--disp);font-size:19px;font-weight:700;letter-spacing:-.005em;line-height:1.25}
+.item .plain .s{font-size:14.5px;color:var(--ink-mut);margin-top:3px}
+.chev{flex:none;color:var(--ink-mut);transition:transform .18s ease}
+.chev svg{width:22px;height:22px;display:block}
+.item[open] .chev{transform:rotate(180deg)}
+
+.reveal{padding:2px 22px 22px;border-top:1px solid var(--line-soft,#eef2f1)}
+.reveal .what{font-size:16.5px;line-height:1.62;color:var(--ink);margin:16px 0 0;max-width:62ch}
+.reveal .what b{font-weight:700}
+.clinical{
+  margin-top:16px;background:var(--card-2);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:14px 16px;font-size:14px;
+}
+.clinical .cl-lbl{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-mut);margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.clinical dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:7px 16px}
+.clinical dt{color:var(--ink-mut)}
+.clinical dd{margin:0;font-family:var(--mono);font-size:13px}
+
+/* labs plain cards */
+.labpair{display:flex;flex-wrap:wrap;gap:14px;margin-top:16px}
+.lp{flex:1 1 240px;background:var(--card-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:18px}
+.lp .top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.lp .name{font-family:var(--disp);font-weight:700;font-size:17px}
+.lp .g3{font-size:12px;font-weight:700;color:#fff;background:var(--crit);border-radius:8px;padding:4px 10px}
+.lp .big{font-family:var(--mono);font-size:30px;margin:10px 0 4px}
+.lp .plainnum{font-size:15px;color:var(--ink);font-weight:700}
+.lp .clin{font-size:13px;color:var(--ink-mut);font-family:var(--mono);margin-top:4px}
+
+.terms{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+.term{font-size:15px;background:var(--accent-soft);color:var(--accent-deep);border-radius:9px;padding:8px 14px;font-weight:700}
+.term code{font-family:var(--mono);font-size:12px;font-weight:400;opacity:.8;margin-left:6px}
+
+/* 3500A peek */
+.peek{background:var(--card-2);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;margin-top:8px}
+.peek-h{padding:12px 16px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--ink-mut);border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center}
+.peek-h .st{margin-left:auto;color:var(--major);background:var(--major-soft);border-radius:20px;padding:3px 11px;text-transform:none}
+.peek pre{margin:0;padding:16px;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--ink-2);
+  white-space:pre-wrap;word-break:break-word;max-height:260px;overflow:auto}
+.causality{display:flex;gap:11px;align-items:baseline;margin-top:16px;padding:16px 18px;
+  background:var(--major-soft);border:1px solid color-mix(in srgb,var(--major) 30%,transparent);
+  border-radius:var(--r-sm);font-size:15.5px;line-height:1.55}
+.causality b{color:var(--major)}
+
+/* sticky sign */
+.signbar{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--card);border-top:2px solid var(--ink)}
+.signbar-in{max-width:780px;margin:0 auto;padding:16px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.signbar .msg{font-size:15px;font-weight:700}
+.signbar .msg span{display:block;font-size:13px;font-weight:400;color:var(--ink-mut)}
+.signbar .grow{flex:1;min-width:8px}
+.btn{border:0;border-radius:13px;padding:15px 24px;font-family:var(--body);font-size:16px;font-weight:700;
+  cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:9px}
+.btn.ghost{background:var(--card-2);color:var(--ink);border:2px solid var(--line-strong)}
+.btn.ghost:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-deep)}
+
+.foot{margin-top:34px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;font-size:13px;color:var(--ink-mut)}
+.foot span{display:flex;align-items:center;gap:7px}
+.foot i{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+
+@media(max-width:560px){
+  .summary h1{font-size:26px}
+  .patient .facts{margin-left:0}
+  .signbar .grow,.signbar .msg span{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="brand">
+      <div class="brand-glyph" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">CareClaw</div>
+        <div class="brand-tag">Review &amp; sign</div>
+      </div>
+    </div>
+    <div class="who">
+      <b>Dr. Vance, MD</b>
+      <span>Principal Investigator</span>
+    </div>
+  </div>
+
+  <!-- ===== plain-English summary ===== -->
+  <div class="summary">
+    <p class="who-for">Here's what needs you</p>
+    <h1><span class="hl">2 issues need your attention</span> before you can sign PT-004's safety report.</h1>
+    <p>
+      One is <b>critical</b> and one is <b>major</b>. The patient's liver tests also came back
+      <b>much higher than usual</b>. Read each in plain English below, open any item for the
+      clinical detail, then sign when you're satisfied.
+    </p>
+
+    <ul class="glance">
+      <li><span class="mark crit" aria-hidden="true">!</span> Taking a medicine the trial doesn't allow <small>Critical · §5.2.1</small></li>
+      <li><span class="mark major" aria-hidden="true">!</span> Check-up happened later than the rules allow <small>Major · §8.1</small></li>
+      <li><span class="mark crit" aria-hidden="true">▲</span> Liver enzymes are severely elevated <small>Grade 3 · CTCAE v5.0</small></li>
+    </ul>
+  </div>
+
+  <!-- patient strip -->
+  <div class="patient">
+    <div>
+      <div class="pid">PT-004</div>
+      <div class="psub">62-year-old man · advanced bowel cancer (mCRC)</div>
+    </div>
+    <div class="facts">
+      <div>Trial <b>ONCO-2026-X88</b></div>
+      <div>Drug <b>Nexavatinib 200mg daily</b></div>
+      <div>Day <b>19</b></div>
+    </div>
+  </div>
+
+  <!-- ===== the two deviations, plain first ===== -->
+  <div class="sec-label">What's wrong</div>
+
+  <details class="item" open>
+    <summary>
+      <span class="tag crit">Critical</span>
+      <span class="plain">
+        <span class="h">The patient is taking a medicine the trial doesn't allow</span>
+        <span class="s">A new prescription clashes with the study drug and may be harming the liver.</span>
+      </span>
+      <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="reveal">
+      <p class="what">
+        Four days ago another doctor prescribed <b>ketoconazole</b> (an antifungal) for a
+        toenail infection. The trial <b>prohibits</b> this class of medicine because it makes the
+        body hold on to far more of the study drug — an estimated <b>3.5&times; more</b> than intended.
+        That extra exposure is a likely reason the liver tests below are so high.
+      </p>
+      <div class="clinical">
+        <div class="cl-lbl">Clinical detail</div>
+        <dl>
+          <dt>Prohibited med</dt><dd>Ketoconazole 200 mg PO daily (CYP3A4 inhibitor)</dd>
+          <dt>Protocol section</dt><dd>§5.2.1 — Prohibited concomitant medications</dd>
+          <dt>Interaction</dt><dd>↑ Nexavatinib exposure &gt;3.5×</dd>
+          <dt>Severity</dt><dd>CRITICAL</dd>
+        </dl>
+      </div>
+    </div>
+  </details>
+
+  <details class="item">
+    <summary>
+      <span class="tag major">Major</span>
+      <span class="plain">
+        <span class="h">The check-up happened later than the rules allow</span>
+        <span class="s">The Day 14 safety visit was done on Day 19 — 3 days past the window.</span>
+      </span>
+      <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="reveal">
+      <p class="what">
+        The trial requires the Cycle&nbsp;1 Day&nbsp;14 safety visit to happen between
+        <b>Days 12 and 16</b>. The patient was travelling out of state and came in on
+        <b>Study Day 19</b> instead — <b>3 days after</b> the window closed.
+      </p>
+      <div class="clinical">
+        <div class="cl-lbl">Clinical detail</div>
+        <dl>
+          <dt>Allowed window</dt><dd>Days 12–16</dd>
+          <dt>Visit performed</dt><dd>Study Day 19 (+3 days)</dd>
+          <dt>Protocol section</dt><dd>§8.1 — Visit windows</dd>
+          <dt>Severity</dt><dd>MAJOR</dd>
+        </dl>
+      </div>
+    </div>
+  </details>
+
+  <!-- ===== labs ===== -->
+  <div class="sec-label">What the labs show</div>
+
+  <details class="item" open>
+    <summary>
+      <span class="tag crit">Grade 3</span>
+      <span class="plain">
+        <span class="h">Liver enzymes are severely elevated</span>
+        <span class="s">Both ALT and AST are about 6× the normal limit and nearly 10× the patient's own baseline.</span>
+      </span>
+      <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="reveal">
+      <p class="what">
+        These two enzymes rise when the liver is stressed or injured. Both are now
+        <b>severely high</b> and have climbed roughly <b>10 times</b> above where this patient
+        started. This is graded <b>Grade 3</b> on the standard cancer-trial toxicity scale.
+      </p>
+      <div class="labpair">
+        <div class="lp">
+          <div class="top"><span class="name">ALT</span><span class="g3">Grade 3</span></div>
+          <div class="big">265</div>
+          <div class="plainnum">≈ 6× the normal limit</div>
+          <div class="clin">U/L · 5.9× ULN · baseline 28 · ▲ 9.5×</div>
+        </div>
+        <div class="lp">
+          <div class="top"><span class="name">AST</span><span class="g3">Grade 3</span></div>
+          <div class="big">230</div>
+          <div class="plainnum">≈ 6× the normal limit</div>
+          <div class="clin">U/L · 5.8× ULN · baseline 24 · ▲ 9.6×</div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="item">
+    <summary>
+      <span class="tag ok">Symptoms</span>
+      <span class="plain">
+        <span class="h">What the patient reported</span>
+        <span class="s">Upper-tummy pain, tiredness, and yellowing of the eyes.</span>
+      </span>
+      <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="reveal">
+      <p class="what">
+        From the visit note, coded to the standard MedDRA safety dictionary (v27.0):
+      </p>
+      <div class="terms">
+        <span class="term">Upper abdominal pain <code>MedDRA 10000059</code></span>
+        <span class="term">Fatigue <code>MedDRA 10016256</code></span>
+        <span class="term">Yellowing of the eyes <code>MedDRA 10030091 · ocular icterus</code></span>
+      </div>
+    </div>
+  </details>
+
+  <!-- ===== 3500A peek ===== -->
+  <div class="sec-label">The report you'll be signing</div>
+
+  <details class="item">
+    <summary>
+      <span class="tag ok">Draft</span>
+      <span class="plain">
+        <span class="h">FDA 3500A safety report — pre-drafted for you</span>
+        <span class="s">Everything is filled in except the decisions only you can make.</span>
+      </span>
+      <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="reveal">
+      <div class="peek" style="margin-top:16px">
+        <div class="peek-h">FDA Form 3500A · Section B <span class="st">Draft · unsigned</span></div>
+        <pre>SECTION B. ADVERSE EVENT CLINICAL NARRATIVE
+  On Study Day 19, the patient presented for a delayed Cycle 1 Day 14
+  evaluation. Laboratory evaluation revealed significant acute
+  transaminase elevation:
+    • ALT: 265 U/L (5.9x ULN) — CTCAE Grade 3
+    • AST: 230 U/L (5.8x ULN) — CTCAE Grade 3
+
+SECTION E. INVESTIGATOR ADJUDICATION & ELECTRONIC SIGN-OFF
+  Causality Assessment:  [ ] Unrelated  [ ] Unlikely  [ ] Possible  [ ] Definite
+  Action with Drug:      [ ] Dose Held  [ ] Dose Reduced  [ ] Discontinued
+  Electronic Signature:  [PENDING 1-CLICK AUTHENTICATED SIGN-OFF]</pre>
+      </div>
+      <div class="causality">
+        <span aria-hidden="true">⚖️</span>
+        <span>The <b>cause</b> and <b>action</b> boxes are left blank on purpose.
+        CareClaw never decides causality — that call is yours.</span>
+      </div>
+    </div>
+  </details>
+
+  <div class="foot">
+    <span><i></i> 100% local · NVIDIA GB10</span>
+    <span><i></i> 21 CFR Part 11 · SHA-256 lock</span>
+    <span><i></i> Network isolated</span>
+  </div>
+
+</div>
+
+<!-- sticky sign -->
+<div class="signbar">
+  <div class="signbar-in">
+    <div class="msg">
+      Ready to sign?
+      <span>Writes a tamper-proof audit lock locally as PI-DR-VANCE-MD.</span>
+    </div>
+    <div class="grow"></div>
+    <button class="btn ghost" type="button">Not yet</button>
+    <button class="btn primary" type="button">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      Approve &amp; Sign
+    </button>
+  </div>
+</div>
+
+<script>
+/* Expand All / Collapse All convenience (progressive disclosure, no framework) */
+(function(){
+  var bar = document.querySelector('.summary');
+  if(!bar) return;
+  var ctl = document.createElement('button');
+  ctl.type = 'button';
+  ctl.textContent = 'Expand all details';
+  ctl.style.cssText = 'margin-top:20px;font:inherit;font-weight:700;font-size:14px;color:var(--accent-deep);'
+    + 'background:var(--accent-soft);border:0;border-radius:10px;padding:10px 16px;cursor:pointer';
+  var open = false;
+  ctl.addEventListener('click', function(){
+    open = !open;
+    document.querySelectorAll('details.item').forEach(function(d){ d.open = open; });
+    ctl.textContent = open ? 'Collapse all details' : 'Expand all details';
+  });
+  bar.appendChild(ctl);
+})();
+</script>
+</body>
+</html>

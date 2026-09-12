@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "careclaw-web",
+      "runtimeExecutable": ".venv/bin/uvicorn",
+      "runtimeArgs": ["web.server:app", "--host", "0.0.0.0", "--port", "8010"],
+      "port": 8010,
+      "url": "http://localhost:8010"
+    }
+  ]
+}

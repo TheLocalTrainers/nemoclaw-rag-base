@@ -45,6 +45,21 @@ class MongoConfig:
 
 
 @dataclass(frozen=True)
+class CareClawConfig:
+    """Operational store for patient records, intake cases, and the event log.
+
+    Shares the Mongo instance with the RAG corpus (see MongoConfig.uri) but uses
+    a dedicated database so the corpus `chunks` collection is never touched.
+    """
+
+    database: str = "careclaw"
+    patients_collection: str = "patients"
+    cases_collection: str = "cases"
+    events_collection: str = "events"
+    care_team_collection: str = "care_team"
+
+
+@dataclass(frozen=True)
 class CorpusConfig:
     dir: str = "corpus"
     extensions: tuple[str, ...] = (".md", ".txt")
@@ -87,6 +102,7 @@ class AgentConfig:
 class Config:
     project: ProjectConfig = field(default_factory=ProjectConfig)
     mongodb: MongoConfig = field(default_factory=MongoConfig)
+    careclaw: CareClawConfig = field(default_factory=CareClawConfig)
     corpus: CorpusConfig = field(default_factory=CorpusConfig)
     chunking: ChunkingConfig = field(default_factory=ChunkingConfig)
     retrieval: RetrievalConfig = field(default_factory=RetrievalConfig)
@@ -169,6 +185,7 @@ def load_config(*, path: Path | str | None = None) -> Config:
 
     project_tbl = data.get("project", {})
     mongo_tbl = data.get("mongodb", {})
+    careclaw_tbl = data.get("careclaw", {})
     corpus_tbl = data.get("corpus", {})
     chunk_tbl = data.get("chunking", {})
     retrieval_tbl = data.get("retrieval", {})
@@ -218,6 +235,32 @@ def load_config(*, path: Path | str | None = None) -> Config:
                 "local_version",
                 "MONGODB_LOCAL_VERSION",
                 defaults.mongodb.local_version,
+            ),
+        ),
+        careclaw=CareClawConfig(
+            database=_pick_str(
+                careclaw_tbl, "database", "CARECLAW_DB", defaults.careclaw.database
+            ),
+            patients_collection=_pick_str(
+                careclaw_tbl,
+                "patients_collection",
+                "CARECLAW_PATIENTS",
+                defaults.careclaw.patients_collection,
+            ),
+            cases_collection=_pick_str(
+                careclaw_tbl, "cases_collection", "CARECLAW_CASES", defaults.careclaw.cases_collection
+            ),
+            events_collection=_pick_str(
+                careclaw_tbl,
+                "events_collection",
+                "CARECLAW_EVENTS",
+                defaults.careclaw.events_collection,
+            ),
+            care_team_collection=_pick_str(
+                careclaw_tbl,
+                "care_team_collection",
+                "CARECLAW_CARE_TEAM",
+                defaults.careclaw.care_team_collection,
             ),
         ),
         corpus=CorpusConfig(

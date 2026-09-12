@@ -1,0 +1,26 @@
+CLINICAL ONCOLOGY OUTPATIENT PROGRESS NOTE
+Patient ID: PT-011
+Date of Visit: 2026-09-05
+Study Protocol: ONCO-2026-X88 (Nexavatinib)
+Subject Status: Cycle 1 Follow-up
+
+CHIEF COMPLAINT:
+"Here for my Cycle 1 Day 14 visit. Feeling mostly okay, a little tired."
+
+HISTORY OF PRESENT ILLNESS:
+Patient PT-011 is a 67-year-old male with refractory metastatic colorectal
+adenocarcinoma enrolled in ONCO-2026-X88. He initiated study drug Nexavatinib
+200mg PO daily on 2026-08-22 (Cycle 1 Day 1).
+
+He presents today for his Cycle 1 Day 14 (C1D14) safety visit on Study Day 15,
+within the protocol window. He reports mild fatigue but is otherwise well, with
+no abdominal pain, nausea, or jaundice.
+
+MEDICATION RECONCILIATION:
+Patient reports he was recently started on warfarin by his cardiologist for
+newly diagnosed atrial fibrillation. He is unsure of the exact start date but
+believes it was within the last two weeks.
+
+ASSESSMENT:
+Grade 1 fatigue; on-window C1D14 assessment; newly initiated therapeutic
+anticoagulant. Laboratory panel drawn today (STAT CMP).

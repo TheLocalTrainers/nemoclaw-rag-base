@@ -30,22 +30,34 @@ pip install -e .
 pip install -r requirements.txt
 ```
 
-### 2. Run the Interactive Streamlit Demo UI
+### 2–4. Hackathon live demo (connected path)
+
+Full timed storyboard: [`docs/DEMO_STORYBOARD.md`](docs/DEMO_STORYBOARD.md)
 
 ```bash
-streamlit run app.py
-```
-* Simulates incoming EHR doctor notes and STAT CMP lab results.
-* Displays real-time **Important Protocol Deviation** alerts.
-* Displays pre-drafted **FDA Form 3500A** narratives.
-* Provides 1-click Principal Investigator electronic sign-off with SHA-256 audit logging.
-
-### 3. Run the Always-On Background Daemon
-
-```bash
+# Terminal A — always-on sentinel
 python3 -m daemon.watcher
+
+# Terminal B — PI review gateway (use sidebar: Review Queue)
+streamlit run app.py
+
+# Terminal C — drop PT-004 note + labs
+./scripts/hackathon_demo_drop.sh
 ```
-Runs an autonomous file listener monitoring `incoming_records/`. When an EHR note (`.txt`) or lab result (`.json`) drops into the directory, it executes the pipeline within milliseconds and archives the event into `audit_logs/careclaw_events.jsonl`.
+
+Flow: drop → ProtocolClaw + SafetyClaw → `audit_logs/pending_reviews.jsonl` → Streamlit **Approve & Sign** → SHA-256 lock in `careclaw_events.jsonl`.
+
+#### FastAPI PI Review Console over the LAN
+
+The light-mode FastAPI console (`web/server.py`, serves both the frontend and its JSON API from one origin) can be reached from other devices on the network:
+
+```bash
+make web                       # binds 0.0.0.0:8010 and prints the LAN URL(s)
+make web WEB_HOST=127.0.0.1    # localhost only
+make where                     # just print the URLs (no server)
+```
+
+> ⚠️ **Trusted-network / demo use only.** `0.0.0.0` exposes the app — which reads/writes the `careclaw` MongoDB demo data — to everyone on the network with **no authentication**. To restrict it, bind `127.0.0.1` or firewall the port (`sudo ufw allow 8010/tcp` to open, or leave it blocked). See [`docs/NETWORK_ACCESS.md`](docs/NETWORK_ACCESS.md).
 
 ### 4. Run Unit Tests (Agent Suite)
 

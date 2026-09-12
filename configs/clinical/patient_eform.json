@@ -1,0 +1,99 @@
+{
+  "form_id": "EPRO-ONCO-2026-X88-V1",
+  "protocol_id": "ONCO-2026-X88",
+  "study_drug": "Nexavatinib (NEX-882) 200 mg PO daily",
+  "title": "Daily Study Subject eDiary (ePRO)",
+  "subtitle": "As per study requirement — home vitals, symptoms & observations for hepatotoxicity safety monitoring.",
+  "rationale": "Nexavatinib carries a known drug-induced liver injury (DILI) signal. This subject-reported outcome form supports between-visit safety surveillance; concerning entries are triaged deterministically and, when flagged, alert the care team per protocol §7.4 (Safety Reporting).",
+  "vitals": [
+    {
+      "key": "temperature_c",
+      "label": "Body temperature",
+      "unit": "°C",
+      "type": "number",
+      "step": 0.1,
+      "normal_range": [36.1, 37.5],
+      "placeholder": "e.g. 36.8"
+    },
+    {
+      "key": "heart_rate_bpm",
+      "label": "Heart rate (resting pulse)",
+      "unit": "bpm",
+      "type": "number",
+      "step": 1,
+      "normal_range": [60, 100],
+      "placeholder": "e.g. 72"
+    },
+    {
+      "key": "systolic_bp",
+      "label": "Blood pressure — systolic",
+      "unit": "mmHg",
+      "type": "number",
+      "step": 1,
+      "normal_range": [90, 130],
+      "placeholder": "e.g. 118"
+    },
+    {
+      "key": "diastolic_bp",
+      "label": "Blood pressure — diastolic",
+      "unit": "mmHg",
+      "type": "number",
+      "step": 1,
+      "normal_range": [60, 85],
+      "placeholder": "e.g. 76"
+    },
+    {
+      "key": "spo2_pct",
+      "label": "Oxygen saturation (SpO₂)",
+      "unit": "%",
+      "type": "number",
+      "step": 1,
+      "normal_range": [95, 100],
+      "placeholder": "e.g. 98"
+    },
+    {
+      "key": "weight_kg",
+      "label": "Body weight",
+      "unit": "kg",
+      "type": "number",
+      "step": 0.1,
+      "normal_range": [40, 200],
+      "placeholder": "e.g. 74.5"
+    }
+  ],
+  "symptoms": [
+    {"key": "abdominal_pain_ruq", "label": "Abdominal pain (upper-right / RUQ)", "hepatic_flag": true},
+    {"key": "jaundice", "label": "Yellowing of eyes or skin (jaundice)", "hepatic_flag": true},
+    {"key": "dark_urine", "label": "Dark / tea-coloured urine", "hepatic_flag": true},
+    {"key": "loss_of_appetite", "label": "Loss of appetite", "hepatic_flag": true},
+    {"key": "nausea", "label": "Nausea or vomiting", "hepatic_flag": true},
+    {"key": "fatigue", "label": "Unusual tiredness / fatigue", "hepatic_flag": true},
+    {"key": "fever", "label": "Feeling feverish", "hepatic_flag": false}
+  ],
+  "severity_options": ["mild", "moderate", "severe"],
+  "free_text": [
+    {"key": "meds", "label": "Concomitant medications taken today", "placeholder": "List any other medicines, supplements or herbal products taken today…", "rows": 3},
+    {"key": "observations", "label": "Anything else you'd like your care team to know", "placeholder": "Optional free-text observations…", "rows": 3}
+  ],
+  "thresholds": {
+    "vitals": [
+      {"field": "temperature_c", "op": ">=", "value": 38.3, "severity": "CONCERN", "rule": "Fever ≥ 38.3°C", "message": "Reported temperature is in the fever range."},
+      {"field": "heart_rate_bpm", "op": ">", "value": 120, "severity": "CONCERN", "rule": "Tachycardia > 120 bpm", "message": "Resting heart rate is elevated."},
+      {"field": "heart_rate_bpm", "op": "<", "value": 50, "severity": "CONCERN", "rule": "Bradycardia < 50 bpm", "message": "Resting heart rate is low."},
+      {"field": "spo2_pct", "op": "<", "value": 92, "severity": "CRITICAL", "rule": "Hypoxia SpO₂ < 92%", "message": "Oxygen saturation is low."},
+      {"field": "spo2_pct", "op": "<", "value": 95, "severity": "WATCH", "rule": "Borderline SpO₂ < 95%", "message": "Oxygen saturation is slightly below normal."},
+      {"field": "systolic_bp", "op": ">", "value": 180, "severity": "CONCERN", "rule": "Systolic BP > 180 mmHg", "message": "Blood pressure (systolic) is high."},
+      {"field": "systolic_bp", "op": "<", "value": 90, "severity": "CONCERN", "rule": "Systolic BP < 90 mmHg", "message": "Blood pressure (systolic) is low."},
+      {"field": "diastolic_bp", "op": ">", "value": 110, "severity": "CONCERN", "rule": "Diastolic BP > 110 mmHg", "message": "Blood pressure (diastolic) is high."}
+    ],
+    "symptoms": [
+      {"field": "jaundice", "when": "present", "severity": "CRITICAL", "rule": "Jaundice reported (possible DILI)", "message": "Yellowing of eyes/skin can signal a liver concern — escalated per protocol §7.4."},
+      {"field": "dark_urine", "when": "present", "severity": "CONCERN", "rule": "Dark urine (possible hepatic signal)", "message": "Dark urine can accompany a liver concern."},
+      {"field": "abdominal_pain_ruq", "when": "severe", "severity": "CONCERN", "rule": "Severe RUQ abdominal pain", "message": "Severe upper-right abdominal pain reported."},
+      {"field": "abdominal_pain_ruq", "when": "present", "severity": "WATCH", "rule": "RUQ abdominal pain reported", "message": "Upper-right abdominal pain reported."},
+      {"field": "nausea", "when": "severe", "severity": "CONCERN", "rule": "Severe nausea/vomiting", "message": "Severe nausea or vomiting reported."},
+      {"field": "fever", "when": "present", "severity": "WATCH", "rule": "Subjective fever reported", "message": "Subject reports feeling feverish."},
+      {"field": "fatigue", "when": "severe", "severity": "WATCH", "rule": "Severe fatigue", "message": "Severe fatigue reported."}
+    ]
+  }
+}

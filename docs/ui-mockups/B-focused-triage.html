@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CareClaw · Focused Triage — PT-004</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ============================================================
+   DIRECTION B — FOCUSED TRIAGE
+   Inbox-zero for safety review · step one finding at a time
+   Display: Space Grotesk · Body: IBM Plex Sans · Mono: IBM Plex Mono
+   ============================================================ */
+:root{
+  --bg:#eef2f6;
+  --panel:#ffffff;
+  --panel-2:#f4f7fa;
+  --line:#dde5ec;
+  --line-soft:#e9eef3;
+
+  --ink:#141d2b;            /* deep slate ink */
+  --ink-2:#4c5a6b;
+  --ink-mut:#7d8b9c;
+
+  --focus:#1466c9;          /* focused blue accent */
+  --focus-soft:#e5eefb;
+  --focus-deep:#0f4d99;
+
+  --crit:#c8383d;
+  --crit-soft:#fbe9ea;
+  --major:#b5730d;
+  --major-soft:#fbefda;
+  --clear:#1f9268;
+  --clear-soft:#e2f4ec;
+
+  --sans:'IBM Plex Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+  --disp:'Space Grotesk',var(--sans);
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --r:18px; --r-sm:12px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%}
+::selection{background:var(--focus-soft)}
+
+.wrap{max-width:940px;margin:0 auto;padding:22px 24px 60px;display:flex;flex-direction:column;min-height:100vh}
+
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-glyph{width:36px;height:36px;flex:none;border-radius:11px;color:#fff;
+  background:linear-gradient(155deg,var(--focus),#3d8ae8);display:grid;place-items:center}
+.brand-glyph svg{width:20px;height:20px}
+.brand-name{font-family:var(--disp);font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:1}
+.brand-tag{font-size:11px;color:var(--ink-mut);margin-top:2px}
+.queue{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);
+  background:var(--panel);border:1px solid var(--line);border-radius:30px;padding:7px 8px 7px 15px}
+.queue b{font-family:var(--mono);color:var(--ink)}
+.queue .av{width:28px;height:28px;border-radius:50%;background:var(--focus-soft);color:var(--focus-deep);
+  display:grid;place-items:center;font-weight:700;font-size:11px}
+
+/* ---------- patient banner ---------- */
+.banner{
+  background:var(--ink);color:#eef3f9;border-radius:var(--r);
+  padding:20px 24px;display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;
+  box-shadow:0 18px 40px -26px rgba(15,30,55,.7);
+}
+.banner .pid{font-family:var(--disp);font-size:26px;font-weight:700;letter-spacing:-.01em}
+.banner .psub{font-size:13px;color:#a9b8cb;margin-top:2px}
+.banner .facts{display:flex;flex-wrap:wrap;gap:14px 26px;margin-left:auto}
+.banner .fact .k{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#7f92aa}
+.banner .fact .v{font-family:var(--mono);font-size:13px;margin-top:3px;color:#eaf0f7}
+
+/* ---------- progress rail ---------- */
+.rail{display:flex;align-items:center;gap:8px;margin:22px 2px 16px;flex-wrap:wrap}
+.rail-lbl{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-mut);margin-right:6px}
+.pip{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-mut);
+  background:var(--panel);border:1px solid var(--line);border-radius:26px;padding:6px 13px 6px 8px}
+.pip .n{width:22px;height:22px;border-radius:50%;background:var(--panel-2);color:var(--ink-mut);
+  display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:600;flex:none}
+.pip.done{color:var(--clear);border-color:color-mix(in srgb,var(--clear) 35%,transparent);background:var(--clear-soft)}
+.pip.done .n{background:var(--clear);color:#fff}
+.pip.current{color:var(--focus-deep);border-color:var(--focus);background:var(--focus-soft);box-shadow:0 0 0 3px var(--focus-soft)}
+.pip.current .n{background:var(--focus);color:#fff}
+
+/* ---------- the alert stage ---------- */
+.stage{flex:1;display:flex;flex-direction:column}
+.stepnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.stepcount{font-size:13px;color:var(--ink-mut)}
+.stepcount b{font-family:var(--mono);color:var(--ink)}
+.stepbtns{display:flex;gap:8px}
+.iconbtn{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);background:var(--panel);
+  color:var(--ink-2);cursor:pointer;display:grid;place-items:center;transition:.15s}
+.iconbtn:hover{border-color:var(--focus);color:var(--focus-deep)}
+.iconbtn svg{width:19px;height:19px}
+
+.alert{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  border-left:6px solid var(--line);overflow:hidden;
+  box-shadow:0 10px 34px -24px rgba(20,29,43,.5);
+}
+.alert.crit{border-left-color:var(--crit)}
+.alert.major{border-left-color:var(--major)}
+.alert-h{padding:22px 26px 0;display:flex;align-items:flex-start;gap:16px}
+.sev-badge{
+  font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:8px 14px;border-radius:11px;white-space:nowrap;flex:none;
+}
+.sev-badge.crit{color:#fff;background:var(--crit)}
+.sev-badge.major{color:#fff;background:var(--major)}
+.alert-kicker{font-size:12px;font-weight:600;letter-spacing:.02em;color:var(--ink-mut);text-transform:uppercase}
+.alert-title{font-family:var(--disp);font-size:27px;font-weight:600;letter-spacing:-.01em;margin:4px 0 0;line-height:1.15}
+.alert-cite{font-family:var(--mono);font-size:13px;color:var(--focus-deep);margin-top:8px}
+
+.alert-body{padding:20px 26px 26px}
+.alert-lead{font-size:17px;line-height:1.62;color:var(--ink);margin:0 0 6px;max-width:66ch}
+.alert-lead b{font-weight:700}
+
+.kv{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.kv .cell{flex:1 1 200px;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:var(--r-sm);padding:14px 16px}
+.kv .k{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mut)}
+.kv .v{font-size:16px;font-weight:600;margin-top:6px}
+.kv .v.mono{font-family:var(--mono);font-size:14px}
+.kv .v.bad{color:var(--crit)}
+
+/* labs mini for the lab step */
+.labrow{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.labcard{flex:1 1 240px;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:var(--r-sm);padding:16px 18px}
+.labcard .an{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.labcard .an b{font-size:16px;font-weight:700}
+.g3{font-size:11px;font-weight:700;letter-spacing:.05em;color:#fff;background:var(--crit);border-radius:8px;padding:4px 10px}
+.labcard .big{font-family:var(--mono);font-size:26px;font-weight:500;margin:10px 0 2px;letter-spacing:-.01em}
+.labcard .sub{font-size:12.5px;color:var(--ink-mut);font-family:var(--mono)}
+.labcard .bar{height:7px;border-radius:20px;background:var(--line);margin-top:12px;overflow:hidden}
+.labcard .bar i{display:block;height:100%;background:var(--crit);border-radius:20px}
+
+.terms{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+.term{font-size:14px;background:var(--focus-soft);color:var(--focus-deep);border-radius:9px;padding:7px 13px;font-weight:600}
+.term code{font-family:var(--mono);font-size:11px;opacity:.7;margin-left:6px;font-weight:400}
+
+/* 3500A peek step */
+.peek{background:#111927;border-radius:var(--r-sm);overflow:hidden;margin-top:4px}
+.peek-h{padding:12px 18px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:#8fa3bd;border-bottom:1px solid #22303f;display:flex;gap:10px;align-items:center}
+.peek-h .st{margin-left:auto;color:#f0c86b;background:#3a2f12;border-radius:20px;padding:3px 11px;letter-spacing:.02em;text-transform:none;font-weight:600}
+.peek pre{margin:0;padding:18px;font-family:var(--mono);font-size:12px;line-height:1.7;color:#c3d1e2;white-space:pre-wrap;word-break:break-word;max-height:260px;overflow:auto}
+.causality{display:flex;gap:11px;align-items:baseline;margin-top:16px;padding:15px 17px;background:var(--major-soft);border-radius:var(--r-sm);font-size:15px;line-height:1.55}
+.causality b{color:var(--major)}
+
+/* ---------- persistent sign dock ---------- */
+.dock{
+  position:sticky;bottom:16px;margin-top:22px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:0 22px 50px -24px rgba(20,29,43,.55);
+  padding:16px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+}
+.dock .status{display:flex;align-items:center;gap:11px}
+.dock .ring{width:40px;height:40px;flex:none;border-radius:50%;
+  background:conic-gradient(var(--clear) 0 75%, var(--line) 75% 100%);display:grid;place-items:center}
+.dock .ring i{width:30px;height:30px;border-radius:50%;background:var(--panel);display:grid;place-items:center;
+  font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink)}
+.dock .status b{font-size:14px;font-weight:700}
+.dock .status span{display:block;font-size:12px;color:var(--ink-mut)}
+.dock .grow{flex:1;min-width:12px}
+.btn{border:0;border-radius:13px;padding:15px 24px;font-family:var(--sans);font-size:15px;font-weight:700;
+  cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:9px}
+.btn.ghost{background:var(--panel-2);color:var(--ink-2);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--focus);color:var(--focus-deep)}
+.btn.primary{background:var(--focus);color:#fff;box-shadow:0 12px 26px -12px var(--focus-deep);font-size:16px;padding:16px 28px}
+.btn.primary:hover{background:var(--focus-deep)}
+
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px;justify-content:center}
+.badge{font-family:var(--mono);font-size:11px;color:var(--ink-mut);background:var(--panel);border:1px solid var(--line);
+  border-radius:8px;padding:6px 11px;display:flex;align-items:center;gap:7px}
+.badge i{width:7px;height:7px;border-radius:50%;background:var(--clear)}
+
+@media(max-width:620px){
+  .banner .facts{margin-left:0}
+  .alert-title{font-size:23px}
+  .dock .grow{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="brand">
+      <div class="brand-glyph" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">CareClaw</div>
+        <div class="brand-tag">Safety triage</div>
+      </div>
+    </div>
+    <div class="queue">
+      <span>Reviewing <b>1</b> of <b>1</b> in queue</span>
+      <span class="av">MV</span>
+    </div>
+  </div>
+
+  <!-- patient banner -->
+  <div class="banner">
+    <div>
+      <div class="pid">PT-004</div>
+      <div class="psub">62 y/o male · Refractory mCRC</div>
+    </div>
+    <div class="facts">
+      <div class="fact"><div class="k">Protocol</div><div class="v">ONCO-2026-X88</div></div>
+      <div class="fact"><div class="k">Drug</div><div class="v">Nexavatinib 200mg PO</div></div>
+      <div class="fact"><div class="k">Study day</div><div class="v">Day 19 · C1</div></div>
+    </div>
+  </div>
+
+  <!-- progress rail: 4 findings to step through -->
+  <div class="rail">
+    <span class="rail-lbl">Review flow</span>
+    <span class="pip done"><span class="n">✓</span> Con-med</span>
+    <span class="pip current"><span class="n">2</span> Visit window</span>
+    <span class="pip"><span class="n">3</span> Labs</span>
+    <span class="pip"><span class="n">4</span> 3500A</span>
+  </div>
+
+  <div class="stage">
+    <div class="stepnav">
+      <div class="stepcount">Finding <b>2</b> of <b>4</b> · Visit window non-compliance</div>
+      <div class="stepbtns">
+        <button class="iconbtn" type="button" aria-label="Previous finding">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="iconbtn" type="button" aria-label="Next finding">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== the featured alert (one at a time) ===== -->
+    <div class="alert major">
+      <div class="alert-h">
+        <span class="sev-badge major">Major</span>
+        <div>
+          <div class="alert-kicker">Protocol deviation · ProtocolClaw</div>
+          <h1 class="alert-title">Visit window non-compliance</h1>
+          <div class="alert-cite">Protocol §8.1 · Visit windows</div>
+        </div>
+      </div>
+      <div class="alert-body">
+        <p class="alert-lead">
+          The Cycle&nbsp;1 Day&nbsp;14 safety visit was performed on <b>Study Day 19</b> —
+          <b>3 days after</b> the allowed window closed. The patient was travelling out of
+          state and missed the target date of 2026-09-03.
+        </p>
+        <div class="kv">
+          <div class="cell"><div class="k">Allowed window</div><div class="v mono">Days 12 – 16</div></div>
+          <div class="cell"><div class="k">Visit performed</div><div class="v mono bad">Study Day 19</div></div>
+          <div class="cell"><div class="k">Deviation</div><div class="v">+3 days late</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== context: what's coming, shown calmly, not as a wall ===== -->
+    <details style="margin-top:16px">
+      <summary style="cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-2);list-style:none;display:flex;gap:8px;align-items:center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        Preview the remaining findings in this case
+      </summary>
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:14px">
+
+        <!-- critical con-med (already reviewed) -->
+        <div class="alert crit" style="box-shadow:none">
+          <div class="alert-h" style="padding-bottom:0">
+            <span class="sev-badge crit">Critical</span>
+            <div>
+              <div class="alert-kicker">Protocol deviation · §5.2.1</div>
+              <h2 class="alert-title" style="font-size:22px">Prohibited concomitant medication</h2>
+            </div>
+          </div>
+          <div class="alert-body" style="padding-top:14px">
+            <p class="alert-lead" style="font-size:15.5px">
+              Oral <b>ketoconazole 200mg daily</b> (CYP3A4 inhibitor) started 4 days ago,
+              prescribed elsewhere. Expected to raise Nexavatinib exposure <b>&gt;3.5&times;</b> —
+              a plausible driver of the hepatic labs.
+            </p>
+          </div>
+        </div>
+
+        <!-- labs -->
+        <div class="alert crit" style="box-shadow:none">
+          <div class="alert-h" style="padding-bottom:0">
+            <span class="sev-badge crit">Grade 3</span>
+            <div>
+              <div class="alert-kicker">Laboratory · SafetyClaw · CTCAE v5.0</div>
+              <h2 class="alert-title" style="font-size:22px">Acute hepatic transaminitis</h2>
+            </div>
+          </div>
+          <div class="alert-body" style="padding-top:14px">
+            <div class="labrow">
+              <div class="labcard">
+                <div class="an"><b>ALT</b><span class="g3">Grade 3</span></div>
+                <div class="big">265 <span style="font-size:14px;color:var(--ink-mut)">U/L</span></div>
+                <div class="sub">5.9× ULN · baseline 28 (▲ 9.5×)</div>
+                <div class="bar"><i style="width:100%"></i></div>
+              </div>
+              <div class="labcard">
+                <div class="an"><b>AST</b><span class="g3">Grade 3</span></div>
+                <div class="big">230 <span style="font-size:14px;color:var(--ink-mut)">U/L</span></div>
+                <div class="sub">5.8× ULN · baseline 24 (▲ 9.6×)</div>
+                <div class="bar"><i style="width:98%"></i></div>
+              </div>
+            </div>
+            <div class="terms">
+              <span class="term">Abdominal pain upper <code>10000059</code></span>
+              <span class="term">Fatigue <code>10016256</code></span>
+              <span class="term">Ocular icterus <code>10030091</code></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3500A -->
+        <div class="alert" style="box-shadow:none;border-left-color:var(--focus)">
+          <div class="alert-h" style="padding-bottom:0">
+            <span class="sev-badge" style="background:var(--focus);color:#fff">Draft</span>
+            <div>
+              <div class="alert-kicker">Regulatory · SafetyClaw</div>
+              <h2 class="alert-title" style="font-size:22px">FDA 3500A pre-draft</h2>
+            </div>
+          </div>
+          <div class="alert-body" style="padding-top:14px">
+            <div class="peek">
+              <div class="peek-h">FDA Form 3500A · Section B <span class="st">Unsigned</span></div>
+              <pre>SECTION B. ADVERSE EVENT CLINICAL NARRATIVE
+  On Study Day 19, the patient presented for a delayed C1D14
+  evaluation. Laboratory evaluation revealed significant acute
+  transaminase elevation:
+    • ALT: 265 U/L (5.9x ULN) — CTCAE Grade 3
+    • AST: 230 U/L (5.8x ULN) — CTCAE Grade 3
+
+SECTION E. INVESTIGATOR ADJUDICATION & SIGN-OFF
+  Causality:  [ ] Unrelated [ ] Unlikely [ ] Possible [ ] Definite
+  Action:     [ ] Dose Held [ ] Dose Reduced [ ] Discontinued
+  Signature:  [PENDING 1-CLICK AUTHENTICATED SIGN-OFF]</pre>
+            </div>
+            <div class="causality">
+              <span aria-hidden="true">⚖️</span>
+              <span>Causality &amp; action fields are <b>blank on purpose</b>. CareClaw never decides causality — you do.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </details>
+  </div>
+
+  <!-- persistent sign dock -->
+  <div class="dock">
+    <div class="status">
+      <div class="ring" aria-hidden="true"><i>3/4</i></div>
+      <div>
+        <b>Almost there</b>
+        <span>3 of 4 findings reviewed · signs as PI-DR-VANCE-MD</span>
+      </div>
+    </div>
+    <div class="grow"></div>
+    <button class="btn ghost" type="button">Skip to end</button>
+    <button class="btn primary" type="button">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      Approve &amp; Sign 3500A
+    </button>
+  </div>
+
+  <div class="badges">
+    <span class="badge"><i></i> 100% local · GB10</span>
+    <span class="badge"><i></i> 21 CFR Part 11 · SHA-256</span>
+    <span class="badge"><i></i> Network isolated</span>
+  </div>
+
+</div>
+</body>
+</html>

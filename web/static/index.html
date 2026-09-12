@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CareClaw · PI Review Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-glyph" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">CareClaw</div>
+        <div class="brand-tag">Clinical Trial Copilot</div>
+      </div>
+    </div>
+
+    <div class="role-switch">
+      <label for="roleSelect">Signed in as</label>
+      <select id="roleSelect">
+        <option value="coordinator">Study Coordinator</option>
+        <option value="pi">Principal Investigator</option>
+        <option value="monitor">Clinical Monitor (CRA)</option>
+        <option value="patient">Study Subject (PT-004)</option>
+      </select>
+    </div>
+
+    <nav class="nav">
+      <button class="nav-item" data-view="intake" type="button">
+        <span class="ni-ico">⬆️</span> New Intake
+      </button>
+      <button class="nav-item active" data-view="inbox" type="button">
+        <span class="ni-ico">📥</span> Review Inbox
+        <span class="ni-count" id="navPending">0</span>
+      </button>
+      <button class="nav-item" data-view="registry" type="button">
+        <span class="ni-ico">🧬</span> Patient Registry
+      </button>
+      <button class="nav-item" data-view="signed" type="button">
+        <span class="ni-ico">🔒</span> Signed Records
+        <span class="ni-count muted" id="navSigned">0</span>
+      </button>
+      <button class="nav-item" data-view="submit" type="button">
+        <span class="ni-ico">📝</span> Submit Report
+      </button>
+      <button class="nav-item" data-view="myreports" type="button">
+        <span class="ni-ico">📓</span> My Reports
+        <span class="ni-count muted" id="navReports">0</span>
+      </button>
+    </nav>
+
+    <div class="side-card">
+      <div class="side-card-h">Trial Protocol</div>
+      <div class="proto-row"><span>Protocol</span><b>ONCO-2026-X88</b></div>
+      <div class="proto-row"><span>Drug</span><b>Nexavatinib 200 mg PO</b></div>
+      <div class="proto-row"><span>Indication</span><b>Refractory mCRC</b></div>
+      <div class="side-sub">Visit windows · §8.1</div>
+      <div class="proto-pill-row">
+        <span class="proto-pill">C1D14 · Days 12–16</span>
+        <span class="proto-pill">C1D28 · Days 26–30</span>
+      </div>
+      <div class="side-sub">Prohibited con-meds · §5.2</div>
+      <div class="proto-pill-row">
+        <span class="proto-pill warn">CYP3A4 inhibitors</span>
+        <span class="proto-pill warn">Anticoagulants</span>
+      </div>
+    </div>
+
+    <div class="badges">
+      <span class="badge ok"><i></i> 100% LOCAL · GB10</span>
+      <span class="badge ok"><i></i> 21 CFR PART 11</span>
+      <span class="badge net"><i></i> NETWORK ISOLATED</span>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1 id="pageTitle">Review Inbox</h1>
+        <p id="pageSub" class="page-sub">Cases enqueued by the OpenClaw daemon, awaiting adjudication.</p>
+      </div>
+      <div class="topbar-right">
+        <button class="btn ghost" id="refreshBtn" type="button">↻ Refresh queue</button>
+        <div class="pi-chip">
+          <div class="pi-avatar" id="roleAvatar">SK</div>
+          <div>
+            <div class="pi-name" id="roleName">Sarah Kim, RN</div>
+            <div class="pi-role" id="roleTitle">Study Coordinator</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- KPI row -->
+    <section class="kpis" id="kpis"></section>
+
+    <!-- INTAKE VIEW -->
+    <section id="intakeView" class="view" hidden>
+      <div class="intake-grid">
+        <div class="card intake-form">
+          <div class="card-h"><span class="ch-badge safety">⬆️</span>
+            <div><h2>Submit clinical record</h2><div class="ch-sub">Drop or select an EHR note and lab panel — CareClaw agents run on submit.</div></div>
+          </div>
+          <div class="card-body">
+            <div class="drop" id="dropNote" data-kind="note">
+              <input type="file" id="fileNote" accept=".txt,text/plain" hidden>
+              <div class="drop-ico">📝</div>
+              <div class="drop-main"><b>Clinical progress note</b><span class="drop-hint">.txt — drag here or click to select</span></div>
+              <div class="drop-file" id="nameNote"></div>
+            </div>
+            <div class="drop" id="dropLabs" data-kind="labs">
+              <input type="file" id="fileLabs" accept=".json,application/json" hidden>
+              <div class="drop-ico">🧪</div>
+              <div class="drop-main"><b>Laboratory panel</b><span class="drop-hint">.json — drag here or click to select</span></div>
+              <div class="drop-file" id="nameLabs"></div>
+            </div>
+            <div class="intake-actions">
+              <button class="btn primary" id="runAgentsBtn" type="button" disabled>▶ Run CareClaw agents</button>
+              <button class="btn ghost" id="sampleBtn" type="button">Use PT-004 sample</button>
+              <button class="btn ghost" id="clearIntakeBtn" type="button">Clear</button>
+            </div>
+            <p class="intake-note">No files leave this machine. Agents run in-process on GB10 and enqueue a case for PI review.</p>
+          </div>
+        </div>
+
+        <div class="card intake-activity">
+          <div class="card-h"><span class="ch-badge proto">🤖</span>
+            <div><h2>Agent activity</h2><div class="ch-sub">Autonomous pipeline — no human pressed “run model.”</div></div>
+          </div>
+          <div class="card-body">
+            <div id="activityFeed" class="activity">
+              <div class="activity-idle">Submit a record to watch ProtocolClaw and SafetyClaw run.</div>
+            </div>
+            <div id="intakeDone" hidden></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INBOX VIEW -->
+    <section id="inboxView" class="view">
+      <div class="inbox-grid">
+        <div class="caselist-wrap">
+          <div class="col-head">Queue <span class="col-head-n" id="listCount">0</span></div>
+          <div id="caseList" class="caselist"></div>
+        </div>
+        <div id="detail" class="detail"></div>
+      </div>
+    </section>
+
+    <!-- REGISTRY VIEW -->
+    <section id="registryView" class="view" hidden>
+      <div class="card registry-form" id="registryForm" hidden></div>
+      <div class="card">
+        <div class="card-h"><span class="ch-badge proto">🧬</span>
+          <div><h2>Enrolled subjects</h2><div class="ch-sub">Study roster · trial phase · current case status</div></div>
+        </div>
+        <div class="card-body">
+          <div id="registryTable" class="registry-wrap"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIGNED VIEW -->
+    <section id="signedView" class="view" hidden>
+      <div id="signedList" class="signed-list"></div>
+    </section>
+
+    <!-- SUBMIT REPORT VIEW (study subject) -->
+    <section id="submitView" class="view" hidden>
+      <div class="submit-grid">
+        <div class="card">
+          <div class="card-h"><span class="ch-badge safety">📝</span>
+            <div><h2 id="eformTitle">Daily Study eDiary</h2><div class="ch-sub" id="eformSub">Loading form…</div></div>
+          </div>
+          <div class="card-body">
+            <form id="eform">
+              <div class="eform-section-h">Vitals</div>
+              <div id="eformVitals" class="eform-vitals"></div>
+              <div class="eform-section-h">Symptoms today</div>
+              <div id="eformSymptoms" class="eform-symptoms"></div>
+              <div id="eformFreeText"></div>
+              <div class="intake-actions">
+                <button class="btn primary" id="submitReportBtn" type="submit">▶ Submit to care team</button>
+                <button class="btn ghost" id="clearReportBtn" type="button">Clear</button>
+              </div>
+              <p class="intake-note">Your entry is stored securely and reviewed by your study care team. This eDiary does not replace emergency care — if you feel very unwell, contact your site or local emergency services.</p>
+            </form>
+            <div id="submitDone" hidden></div>
+          </div>
+        </div>
+        <div class="card eform-aside">
+          <div class="card-h"><span class="ch-badge proto">🛡️</span>
+            <div><h2>Why we ask</h2><div class="ch-sub">Between-visit safety monitoring</div></div>
+          </div>
+          <div class="card-body">
+            <p id="eformRationale" class="eform-rationale"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MY REPORTS VIEW (study subject) -->
+    <section id="myReportsView" class="view" hidden>
+      <div id="myReportsList" class="myreports-list"></div>
+    </section>
+  </main>
+</div>
+
+<!-- 3500A Assistant workspace (local vLLM): document history · draft · chat -->
+<div id="wsOverlay" class="ws-overlay" hidden>
+  <div class="ws" role="dialog" aria-label="3500A drafting assistant">
+    <header class="ws-head">
+      <div class="ws-title">
+        <span class="ws-glyph">💬</span>
+        <div>
+          <b>3500A Draft Assistant</b>
+          <span class="ws-sub"><span class="chat-dot" id="chatDot"></span><span id="chatModel">connecting…</span></span>
+        </div>
+      </div>
+      <button class="chat-close" id="wsClose" type="button" aria-label="Close">✕</button>
+    </header>
+
+    <div class="ws-body">
+      <!-- left: document history -->
+      <aside class="ws-docs">
+        <div class="ws-docs-h">Documents</div>
+        <div id="wsDocList" class="ws-doclist"></div>
+      </aside>
+
+      <!-- right: draft + chat -->
+      <section class="ws-main">
+        <div class="ws-draft">
+          <div class="ws-pane-h">FDA 3500A draft <span id="wsDocStatus" class="doc-pill"></span></div>
+          <textarea id="wsDraft" class="ws-draft-text" spellcheck="false" placeholder="Draft narrative…"></textarea>
+        </div>
+        <div class="ws-chat">
+          <div class="ws-pane-h">Iterate with the assistant</div>
+          <div id="wsMsgs" class="ws-msgs"></div>
+          <div class="ws-compose">
+            <textarea id="wsText" rows="2" placeholder="e.g. Tighten Section B; add the dose-hold rationale…"></textarea>
+            <div class="ws-compose-actions">
+              <button class="btn ghost" id="wsApply" type="button" hidden>↧ Apply reply to draft</button>
+              <button class="btn primary" id="wsSend" type="button">Send</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="ws-foot">
+      <span class="ws-foot-note">⚖️ The assistant never determines causality — that stays yours.</span>
+      <div class="ws-foot-actions">
+        <span id="wsReadonlyNote" class="ws-readonly-note" hidden>👁 Read-only — only the Principal Investigator can edit or sign.</span>
+        <button class="btn ghost" id="wsSaveDraft" type="button">Save draft</button>
+        <button class="btn primary" id="wsSaveSign" type="button">Save &amp; Submit (Sign)</button>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

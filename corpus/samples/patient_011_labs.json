@@ -1,0 +1,36 @@
+{
+  "patient_id": "PT-011",
+  "study_protocol": "ONCO-2026-X88",
+  "draw_date": "2026-09-05",
+  "study_day": 15,
+  "c1d1_date": "2026-08-22",
+  "age": 67,
+  "sex": "Male",
+  "panel": "Comprehensive Metabolic Panel",
+  "chemistry": {
+    "ALT": {
+      "value": 95,
+      "unit": "U/L",
+      "ref_low": 7,
+      "ref_high": 45,
+      "status": "HIGH",
+      "baseline_value": 30
+    },
+    "AST": {
+      "value": 80,
+      "unit": "U/L",
+      "ref_low": 8,
+      "ref_high": 40,
+      "status": "HIGH",
+      "baseline_value": 25
+    },
+    "Total_Bilirubin": {
+      "value": 0.9,
+      "unit": "mg/dL",
+      "ref_low": 0.2,
+      "ref_high": 1.2,
+      "status": "NORMAL",
+      "baseline_value": 0.6
+    }
+  }
+}
