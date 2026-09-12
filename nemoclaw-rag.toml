@@ -1,0 +1,75 @@
+# =============================================================================
+# nemoclaw-rag-base — SINGLE SOURCE OF TRUTH for configuration decisions
+# =============================================================================
+# Read by rag/config.py. Committed to git. Contains NO secrets.
+#
+# Precedence (highest wins):
+#   1. CLI flag           (e.g. --uri, --database, --top-k)
+#   2. Environment var    (e.g. MONGODB_URI, set in shell or .env)
+#   3. This file          (nemoclaw-rag.toml)
+#   4. Code fallback      (rag/config.py dataclass defaults)
+#
+# Secrets (OPENAI_API_KEY etc.) belong ONLY in .env, which is gitignored.
+# See docs/CONFIGURATION.md for the full registry and open decisions.
+# =============================================================================
+
+[project]
+name = "nemoclaw-rag-base"
+# Deterministic fact used by the smoke test. Must exist in the corpus.
+smoke_token = "NEON-BEACON-42"
+smoke_question = "What is the project beacon code?"
+
+[mongodb]
+# env: MONGODB_URI
+uri = "mongodb://127.0.0.1:27017"
+# env: MONGODB_DB / MONGODB_COLLECTION
+database = "nemoclaw_rag"
+collection = "chunks"
+# env: MONGODB_SMOKE_DB / MONGODB_SMOKE_COLLECTION
+# Smoke runs against a separate database so it never destroys real data.
+smoke_database = "nemoclaw_rag_smoke"
+smoke_collection = "chunks"
+# Fail fast instead of hanging when Mongo is unreachable.
+server_selection_timeout_ms = 5000
+# Local startup decisions consumed by scripts/start-mongo.sh and docker-compose.yml.
+# env: MONGODB_PORT / MONGODB_IMAGE / MONGODB_LOCAL_VERSION
+port = 27017
+docker_image = "mongo:7"
+local_version = "7.0.39"
+
+[corpus]
+# env: RAG_CORPUS_DIR
+dir = "corpus"
+extensions = [".md", ".txt"]
+
+[chunking]
+# env: RAG_CHUNK_MAX_CHARS / RAG_CHUNK_OVERLAP
+max_chars = 900
+overlap = 120
+
+[retrieval]
+# env: RAG_TOP_K
+top_k = 3
+# Regex scan when the Mongo $text query returns nothing (small-corpus safety net).
+regex_fallback = true
+# Minimum token length considered for search.
+min_token_length = 2
+
+[model]
+# Any OpenAI-compatible /chat/completions endpoint.
+# env: OPENAI_BASE_URL / OPENAI_MODEL
+base_url = "https://api.openai.com/v1"
+model = "gpt-4.1-mini"
+temperature = 0
+timeout_seconds = 60
+# Name of the env var holding the secret. The secret itself is never stored here.
+api_key_env = "OPENAI_API_KEY"
+
+[agent]
+# Which harness NemoClaw onboards: "hermes" or "openclaw".
+# env: NEMOCLAW_AGENT
+harness = "hermes"
+# env: NEMOCLAW_SANDBOX_NAME
+sandbox_name = "nemoclaw-rag-base"
+# env: NEMOCLAW_PROVIDER
+nemoclaw_provider = "openai-api"
