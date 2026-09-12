@@ -1,0 +1,65 @@
+{
+  "version": "MedDRA 27.0",
+  "terms": [
+    {
+      "llt": "ALT increased",
+      "pt": "Alanine aminotransferase increased",
+      "code": "10001551",
+      "soc": "Investigations"
+    },
+    {
+      "llt": "AST increased",
+      "pt": "Aspartate aminotransferase increased",
+      "code": "10003481",
+      "soc": "Investigations"
+    },
+    {
+      "llt": "Hyperbilirubinemia",
+      "pt": "Blood bilirubin increased",
+      "code": "10005364",
+      "soc": "Investigations"
+    },
+    {
+      "llt": "Scleral icterus",
+      "pt": "Ocular icterus",
+      "code": "10030095",
+      "soc": "Eye disorders"
+    },
+    {
+      "llt": "Upper abdominal pain",
+      "pt": "Abdominal pain upper",
+      "code": "10000087",
+      "soc": "Gastrointestinal disorders"
+    },
+    {
+      "llt": "Right upper quadrant tenderness",
+      "pt": "Hepatic pain",
+      "code": "10019684",
+      "soc": "Hepatobiliary disorders"
+    },
+    {
+      "llt": "Nausea",
+      "pt": "Nausea",
+      "code": "10028813",
+      "soc": "Gastrointestinal disorders"
+    },
+    {
+      "llt": "Fatigue",
+      "pt": "Fatigue",
+      "code": "10016256",
+      "soc": "General disorders and administration site conditions"
+    },
+    {
+      "llt": "Decreased platelet count",
+      "pt": "Thrombocytopenia",
+      "code": "10043554",
+      "soc": "Blood and lymphatic system disorders"
+    },
+    {
+      "llt": "Acute kidney injury",
+      "pt": "Acute kidney injury",
+      "code": "10069339",
+      "soc": "Renal and urinary disorders"
+    }
+  ]
+}
