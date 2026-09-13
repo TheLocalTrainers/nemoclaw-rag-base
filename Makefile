@@ -1,4 +1,4 @@
-.PHONY: smoke ingest query test config venv mongo-up mongo-down mongo-logs onboard onboard-help web where seed mongo-reset
+.PHONY: smoke ingest query test config venv mongo-up mongo-down mongo-logs onboard onboard-help web where seed mongo-reset show-db
 
 # Host/port for the FastAPI PI Review Console.
 #   Default host 0.0.0.0 binds all interfaces so the app is reachable over the LAN.
@@ -54,6 +54,10 @@ onboard-help:
 # Seed the demo into MongoDB (careclaw db): 1 PT-004 patient + 1 pending case + events.
 seed: mongo-up
 	$(PYTHON) -m scripts.seed_demo
+
+# Read-only tour of the MongoDB setup (dbs, collections, counts, indexes, sample docs).
+show-db: mongo-up
+	$(PYTHON) -m scripts.show_db
 
 # Clear ONLY the careclaw operational collections (patients/cases/events); leaves the RAG corpus.
 mongo-reset: mongo-up
