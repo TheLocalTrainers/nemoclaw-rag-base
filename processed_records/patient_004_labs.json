@@ -1,0 +1,49 @@
+{
+  "patient_id": "PT-004",
+  "study_protocol": "ONCO-2026-X88",
+  "draw_date": "2026-09-08",
+  "study_day": 19,
+  "panel": "Comprehensive Metabolic Panel",
+  "chemistry": {
+    "ALT": {
+      "value": 265,
+      "unit": "U/L",
+      "ref_low": 7,
+      "ref_high": 45,
+      "status": "CRITICAL_HIGH",
+      "baseline_value": 28
+    },
+    "AST": {
+      "value": 230,
+      "unit": "U/L",
+      "ref_low": 8,
+      "ref_high": 40,
+      "status": "CRITICAL_HIGH",
+      "baseline_value": 24
+    },
+    "Total_Bilirubin": {
+      "value": 2.4,
+      "unit": "mg/dL",
+      "ref_low": 0.2,
+      "ref_high": 1.2,
+      "status": "HIGH",
+      "baseline_value": 0.8
+    },
+    "Serum_Creatinine": {
+      "value": 1.0,
+      "unit": "mg/dL",
+      "ref_low": 0.6,
+      "ref_high": 1.2,
+      "status": "NORMAL",
+      "baseline_value": 0.9
+    },
+    "Platelets": {
+      "value": 185000,
+      "unit": "/uL",
+      "ref_low": 150000,
+      "ref_high": 450000,
+      "status": "NORMAL",
+      "baseline_value": 210000
+    }
+  }
+}

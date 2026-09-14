@@ -1,0 +1,27 @@
+CLINICAL ONCOLOGY OUTPATIENT PROGRESS NOTE
+Patient ID: PT-010
+Date of Visit: 2026-09-10
+Study Protocol: ONCO-2026-X88 (Nexavatinib)
+Subject Status: Cycle 1 Follow-up
+
+CHIEF COMPLAINT:
+"Here for my Cycle 1 Day 14 checkup. I've been very tired and a bit nauseous this week."
+
+HISTORY OF PRESENT ILLNESS:
+Patient PT-010 is a 58-year-old female with refractory metastatic colorectal
+adenocarcinoma enrolled in ONCO-2026-X88. She initiated study drug Nexavatinib
+200mg PO daily on 2026-08-21 (Cycle 1 Day 1).
+
+She presents today for her delayed Cycle 1 Day 14 (C1D14) safety visit on Study
+Day 20. She was unable to attend earlier in the window due to transportation
+difficulties. Patient reports approximately 5 days of fatigue and intermittent
+nausea, without vomiting.
+
+MEDICATION RECONCILIATION:
+Patient started oral itraconazole 6 days ago, prescribed by her primary care
+physician for a persistent toenail fungal infection. She was not aware this
+required study-team notification.
+
+ASSESSMENT:
+Grade 2 fatigue and nausea; delayed C1D14 assessment; concomitant azole
+antifungal initiated. Laboratory panel drawn today (STAT CMP).

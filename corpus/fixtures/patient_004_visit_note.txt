@@ -1,0 +1,27 @@
+CLINICAL ONCOLOGY OUTPATIENT PROGRESS NOTE
+Patient ID: PT-004
+Date of Visit: 2026-09-08
+Study Protocol: ONCO-2026-X88 (Nexavatinib)
+Subject Status: Cycle 1 Follow-up
+
+CHIEF COMPLAINT:
+"Here for my cycle 1 checkup and blood tests. Had some stomach pain over the weekend."
+
+HISTORY OF PRESENT ILLNESS:
+Patient PT-004 is a 62-year-old male with refractory metastatic colorectal adenocarcinoma enrolled in ONCO-2026-X88. He initiated study drug Nexavatinib 200mg PO daily on 2026-08-20 (Cycle 1 Day 1). 
+He presents today for his delayed Cycle 1 Day 14 follow-up on Study Day 19. Patient explains he was traveling out of state for family reasons last week and was unable to attend the scheduled Day 14 visit window (target date 2026-09-03).
+Over the past 4 days, patient reports new-onset right upper quadrant abdominal tenderness and noticeable fatigue. Appetite has been slightly reduced, but no vomiting.
+On medication reconciliation: Patient states that 4 days ago his podiatrist prescribed oral ketoconazole 200mg daily for an escalating fungal toenail infection, which he has been taking alongside Nexavatinib.
+
+PHYSICAL EXAMINATION:
+Vitals: BP 132/84 mmHg, HR 78 bpm, Temp 98.4 F, SpO2 98% on room air.
+General: Alert, oriented x 3, appears slightly fatigued.
+HEENT: Mild scleral icterus noted bilaterally. No oral mucosal lesions.
+Abdomen: Soft, mild right-upper-quadrant tenderness on deep palpation. Liver edge palpable 1 cm below costal margin. Bowel sounds present. No ascites or rebound tenderness.
+
+ASSESSMENT & PLAN:
+1. Metastatic Colorectal Cancer (ONCO-2026-X88): Delayed Cycle 1 Day 14 safety visit performed on Study Day 19.
+2. Acute Hepatic Transaminitis & Scleral Icterus: Awaiting urgent STAT comprehensive metabolic panel results drawn today.
+3. Medication Review: Oral ketoconazole co-administered. Will evaluate protocol compliance and potential pharmacokinetic drug interaction upon lab review.
+
+Electronically Signed: Marcus Vance, MD (Principal Investigator)

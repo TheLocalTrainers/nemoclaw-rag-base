@@ -1,0 +1,44 @@
+{
+  "patient_id": "PT-010",
+  "study_protocol": "ONCO-2026-X88",
+  "draw_date": "2026-09-10",
+  "study_day": 20,
+  "c1d1_date": "2026-08-21",
+  "age": 58,
+  "sex": "Female",
+  "panel": "Comprehensive Metabolic Panel",
+  "chemistry": {
+    "ALT": {
+      "value": 180,
+      "unit": "U/L",
+      "ref_low": 7,
+      "ref_high": 45,
+      "status": "HIGH",
+      "baseline_value": 31
+    },
+    "AST": {
+      "value": 150,
+      "unit": "U/L",
+      "ref_low": 8,
+      "ref_high": 40,
+      "status": "HIGH",
+      "baseline_value": 26
+    },
+    "Total_Bilirubin": {
+      "value": 1.1,
+      "unit": "mg/dL",
+      "ref_low": 0.2,
+      "ref_high": 1.2,
+      "status": "NORMAL",
+      "baseline_value": 0.7
+    },
+    "Serum_Creatinine": {
+      "value": 0.9,
+      "unit": "mg/dL",
+      "ref_low": 0.6,
+      "ref_high": 1.2,
+      "status": "NORMAL",
+      "baseline_value": 0.8
+    }
+  }
+}

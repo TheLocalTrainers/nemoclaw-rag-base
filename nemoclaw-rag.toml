@@ -37,6 +37,17 @@ port = 27017
 docker_image = "mongo:7"
 local_version = "7.0.39"
 
+[careclaw]
+# CareClaw operational store — the single source of truth for patient records,
+# intake cases, and the append-only agent/PI event log. Separate database from
+# the RAG corpus (mongodb.database) but the SAME Mongo instance (mongodb.uri).
+# env: CARECLAW_DB / CARECLAW_PATIENTS / CARECLAW_CASES / CARECLAW_EVENTS
+database = "careclaw"
+patients_collection = "patients"
+cases_collection = "cases"
+events_collection = "events"
+care_team_collection = "care_team"
+
 [corpus]
 # env: RAG_CORPUS_DIR
 dir = "corpus"

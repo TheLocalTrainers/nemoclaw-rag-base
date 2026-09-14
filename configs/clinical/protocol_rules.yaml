@@ -1,0 +1,79 @@
+protocol_id: "ONCO-2026-X88"
+study_title: "Phase 2/3 Study of Nexavatinib in Refractory mCRC"
+investigational_agent: "Nexavatinib"
+standard_dose: "200mg PO daily"
+
+visit_windows:
+  cycle_1_day_1:
+    target_day: 1
+    window_days: 0
+    description: "Cycle 1 Day 1 (Baseline & Initial Dose)"
+  cycle_1_day_14:
+    target_day: 14
+    window_days: 2
+    description: "Cycle 1 Day 14 (Allowed: Days 12 to 16)"
+  cycle_1_day_28:
+    target_day: 28
+    window_days: 2
+    description: "Cycle 1 Day 28 (Allowed: Days 26 to 30)"
+  cycle_2_day_1:
+    target_day: 29
+    window_days: 2
+    description: "Cycle 2 Day 1 (Allowed: Days 27 to 31)"
+  efficacy_scan_week_8:
+    target_day: 56
+    window_days: 5
+    description: "Week 8 Tumor CT Scan (Allowed: Days 51 to 61)"
+
+prohibited_concomitant_medications:
+  - category: "Potent CYP3A4 Inhibitors"
+    protocol_section: "Section 5.2.1"
+    severity: "CRITICAL"
+    drugs:
+      - "ketoconazole"
+      - "itraconazole"
+      - "posaconazole"
+      - "clarithromycin"
+      - "ritonavir"
+      - "cobicistat"
+      - "grapefruit juice"
+    rationale: "Increases Nexavatinib exposure >3.5x, causing severe hepatotoxicity and marrow suppression."
+    action: "Immediate investigator alert. Withhold Nexavatinib and discontinue inhibitor."
+
+  - category: "Potent CYP3A4 Inducers"
+    protocol_section: "Section 5.2.2"
+    severity: "HIGH"
+    drugs:
+      - "rifampin"
+      - "carbamazepine"
+      - "phenytoin"
+      - "st. john's wort"
+    rationale: "Reduces plasma exposure to sub-therapeutic levels."
+    action: "Investigator notification to substitute non-inducing agent."
+
+  - category: "Therapeutic Anticoagulants"
+    protocol_section: "Section 5.2.3"
+    severity: "HIGH"
+    drugs:
+      - "warfarin"
+      - "apixaban"
+      - "rivaroxaban"
+    rationale: "Additive major bleeding risk with VEGFR inhibition."
+    action: "Switch to prophylactic low-molecular-weight heparin if clinically indicated."
+
+ctcae_toxicity_rules:
+  ALT:
+    unit: "U/L"
+    uln: 45
+    grade_1_threshold_mult: 1.0   # > 45 to 135
+    grade_2_threshold_mult: 3.0   # > 135 to 225
+    grade_3_threshold_mult: 5.0   # > 225 to 900 -> MANDATORY HOLD
+    grade_4_threshold_mult: 20.0  # > 900 -> PERMANENT DISCONTINUATION
+  AST:
+    unit: "U/L"
+    uln: 40
+    grade_3_threshold_mult: 5.0
+  Total_Bilirubin:
+    unit: "mg/dL"
+    uln: 1.2
+    grade_3_threshold_mult: 3.0
